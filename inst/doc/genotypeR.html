@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Stephen A. Sefick" />
+
+<meta name="date" content="2017-08-23" />
+
+<title>genotypeR vignette</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">genotypeR vignette</h1>
+<h4 class="author"><em>Stephen A. Sefick</em></h4>
+<h4 class="date"><em>2017-08-23</em></h4>
+
+
+
+<p>This vignette describes the parts of/and how to use the genotypeR package for analysing genotyping data. This package provides an integrated interface from designing genotyping markers to final analysis. I will describe the general work flow related to using the package.</p>
+<div id="installing-genotyper" class="section level2">
+<h2>Installing genotypeR</h2>
+<p>At present, the development version of the package can be installed from <a href="https://github.com/StevisonLab/genotypeR" class="uri">https://github.com/StevisonLab/genotypeR</a>, and the stable version can be installed from (<a href="https://bioconductor.org/">Bioconductor</a>) or (<a href="https://www.r-project.org/">CRAN</a>) (depending on where it is released).</p>
+<div id="install-genotyper" class="section level3">
+<h3>install genotypeR</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
+devtools::<span class="kw">install_git</span>(<span class="st">&quot;https://github.com/StevisonLab/genotypeR&quot;</span>)</code></pre></div>
+</div>
+<div id="load-genotyper" class="section level3">
+<h3>load genotypeR</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(genotypeR)</code></pre></div>
+<pre><code>## 
+## Attaching package: 'genotypeR'</code></pre>
+<pre><code>## The following object is masked from 'package:methods':
+## 
+##     show</code></pre>
+</div>
+</div>
+<div id="marker-design" class="section level2">
+<h2>Marker design</h2>
+<p>genotypeR provides <strong>SequenomMarkers</strong> to run a perl/vcftools pipeline to design genotyping markers. As a result, vcftools, perl, and a *nix environment are needed for marker design. There are 3 ways to develop markers with genotypeR. The example data is located in the SequenomMarkers directory in the package install directory, and should be useful for exploring the use of the package. Importantly, there are 2 different marker platforms (i.e., argument type) 100 bp flanking reference bases (platform=“sq”), and 50 bp flanking reference bases (platform=“gg”).</p>
+<div id="r-console" class="section level3">
+<h3>R console</h3>
+<p><strong>SequenomMarkers</strong> can be run from the R console.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_files &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;SequenomMarkers_v2/two_sample/test_files&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;genotypeR&quot;</span>)
+
+vcf1 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample1.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+vcf2 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample2.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+
+##look in outdir to look at the results in Master_SNPs.sorted.txt.
+outdir &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;test_dir&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+
+<span class="kw">SequenomMarkers</span>(vcf1, vcf2, outdir, <span class="dt">platform=</span><span class="st">&quot;sq&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;using two sample marker designer&quot;</code></pre>
+</div>
+<div id="r-script" class="section level3">
+<h3>R script</h3>
+<p><strong>SequenomMarkers</strong> can be run using the Rscript interface. This interface is useful when designing marker on a high performace computing platform.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#!/usr/bin/env Rscript</span>
+
+<span class="kw">library</span>(genotypeR)
+
+example_files &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;SequenomMarkers_v2/two_sample/test_files&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;genotypeR&quot;</span>)
+
+vcf1 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample1.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+vcf2 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample2.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+outdir &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;test_dir&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+
+<span class="kw">SequenomMarkers</span>(vcf1, vcf2, outdir, <span class="dt">platform=</span><span class="st">&quot;sq&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;using two sample marker designer&quot;</code></pre>
+</div>
+<div id="shellperlvcftools-pipline" class="section level3">
+<h3>Shell/Perl/vcftools pipline</h3>
+<p>The original code for marker design software can be run from the commandline. This code is contained in the SequenomMarkers folder in the genotypeR installation directory (R/SequenomMarkers/R/R_Pipeline_Rapper.sh), or directly from github (<a href="https://github.com/StevisonLab/genotypeR/tree/master/inst/SequenomMarkers" class="uri">https://github.com/StevisonLab/genotypeR/tree/master/inst/SequenomMarkers</a>).</p>
+</div>
+</div>
+<div id="post-marker-designpre-genotyping" class="section level2">
+<h2>Post marker design/Pre-genotyping</h2>
+<p>After markers are designed, and before genotyping is conducted on the sequenom, marker names need to be generated from <strong>SequenomMarkers</strong>. The marker output from <strong>SequenomMarkers</strong> needs to be read into R with <strong>read_in_Master_SNPs_data</strong> and converted to a data frame with <strong><em>make_marker_names</em></strong> with marker names suitable for genotypeR. We have provied example data in the extdata directory of the package installation directory. 2_sequenom_plate_2_chip_8_dpseudo_plasticity_1_10_2017.csv is a raw data file that is the same data as the genotypes_data provided with the package and filtered_markers.txt is the same as the data provided by markers. For simplicity I will use the data provided with the package, but the raw data is provided for the user’s reference.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dir</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;genotypeR&quot;</span>))</code></pre></div>
+<pre><code>## [1] &quot;filtered_markers.txt&quot;   &quot;sequenom_test_data.csv&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## read in marker data
+<span class="kw">data</span>(markers)
+## make marker names
+marker_names &lt;-<span class="st"> </span><span class="kw">make_marker_names</span>(markers)</code></pre></div>
+<p>These can be written as a csv for use in the Sequenom as a csv file.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.csv</span>(marker_names, <span class="st">&quot;/your/dir/file.csv&quot;</span>)</code></pre></div>
+</div>
+<div id="genotyping" class="section level2">
+<h2>Genotyping</h2>
+<p>This will be conducted on the platform the markers were designed for. Our example will revolve around the Sequenom platform, but we have implemented these the work flow for other genotyping platforms as well.</p>
+</div>
+<div id="post-genotyping-qaqc" class="section level2">
+<h2>Post-genotyping QA/QC</h2>
+<p>The QA/QC of genotyping data is an important step in any genotyping experiment. First, genotyping data will need to be read into R with the appropriate function <strong>read_in_sequenom_data</strong>. These data are from the GENOTYPES tab of the excel sheet that is produced from the Sequenom machine, and will be used once converted to a csv. A genotype table is made from <strong>make_marker_names</strong> output with <strong>Ref_Alt_Table</strong>. Generally, you will want to pre-filter the sequenom markers that were used in the genotyping assay in order to be able to use these in further analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw">data</span>(genotypes_data) 
+
+  ## genotype table
+  GT_table &lt;-<span class="st"> </span><span class="kw">Ref_Alt_Table</span>(marker_names)
+
+  ## remove those markers that did not work
+  genotypes_data_filtered &lt;-<span class="st"> </span>genotypes_data[,<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="kw">grep</span>(<span class="st">&quot;TRUE&quot;</span>, <span class="kw">colnames</span>(genotypes_data)%in%GT_table$marker_names))]</code></pre></div>
+<p>We designed this package from a backcross experiment and, as a result, <strong>initialize_genotypeR_data</strong> is the name of this function. This is where a genotypeR object is made, and processing data with this function is required for all other downstream analyses with genotypeR. Backcross warnings, those having to do with an impossible genotype, are produced by this function with the output = “warnings”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## warnings for a backcross design
+##Note warning_allele is Ref allele
+warnings_out &lt;-<span class="st"> </span><span class="kw">initialize_genotypeR_data</span>(<span class="dt">seq_data =</span> genotypes_data_filtered, <span class="dt">genotype_table =</span> GT_table, <span class="dt">output=</span><span class="st">&quot;warnings&quot;</span>)</code></pre></div>
+<p>Once, the warnings have been inspected for errors, and then all of these can then be changed to NAs if we are sure that they are incorrect (i.e., bad spectra, etc.).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## warnings for a backcross design
+##Note warning_allele is Ref allele
+warnings_out &lt;-<span class="st"> </span><span class="kw">initialize_genotypeR_data</span>(<span class="dt">seq_data =</span> genotypes_data_filtered, <span class="dt">genotype_table =</span> GT_table, <span class="dt">output=</span><span class="st">&quot;warnings2NA&quot;</span>)</code></pre></div>
+<p>If the user is satisfied that all the data is correct, or the data was generated by another process (different cross, SNP genotyping in wild populations, etc.) the user can use the “pass_through” option for the output argument of <strong>initialize_genotypeR_data</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## warnings for a backcross design
+##Note warning_allele is Ref allele
+warnings_out &lt;-<span class="st"> </span><span class="kw">initialize_genotypeR_data</span>(<span class="dt">seq_data =</span> genotypes_data_filtered, <span class="dt">genotype_table =</span> GT_table, <span class="dt">output=</span><span class="st">&quot;pass_through&quot;</span>)</code></pre></div>
+<p>Let’s return to our example. We can use the “warnings2NA” argument to output because we are confident that we have correct genotypes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##We are confident that the warngins should be turned into no Calls
+warnings_out2NA &lt;-<span class="st"> </span><span class="kw">initialize_genotypeR_data</span>(<span class="dt">seq_data =</span> genotypes_data_filtered, <span class="dt">genotype_table =</span> GT_table, <span class="dt">output =</span> <span class="st">&quot;warnings2NA&quot;</span>)</code></pre></div>
+<p>We can now binary code this table as 0 (Homozygous) and 1 (Heterozygous) with <strong>binary_coding</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binary_coding_genotypes &lt;-<span class="st"> </span><span class="kw">binary_coding</span>(warnings_out2NA, <span class="dt">genotype_table =</span> GT_table)</code></pre></div>
+<p>This would be the typical use for a backcross design. <strong>zero_one_two_coding</strong> if data is used where 3 states would be able to be assigned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">binary_coding_genotypes &lt;-<span class="st"> </span><span class="kw">zero_one_two_coding</span>(warnings_out2NA, <span class="dt">genotype_table =</span> GT_table)</code></pre></div>
+<p>After binary coding, we can count crossovers with <strong>count_CO</strong>, but first the user should subset based on chromosome.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chr2 &lt;-<span class="st"> </span><span class="kw">subsetChromosome</span>(binary_coding_genotypes, <span class="dt">chromosome=</span><span class="st">&quot;chr2&quot;</span>)
+
+crossover_count &lt;-<span class="st"> </span><span class="kw">count_CO</span>(chr2)</code></pre></div>
+</div>
+<div id="other-importexport-functions" class="section level2">
+<h2>Other import/export functions</h2>
+<div id="export" class="section level3">
+<h3>export</h3>
+<p>Our backcross example can be utilized to show how our data can be output to the rqtl package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##writes out the data
+<span class="kw">convert2qtl_table</span>(chr2, <span class="dt">chromosome_vect=</span><span class="kw">rep</span>(<span class="dv">2</span>, <span class="kw">length</span>(<span class="kw">binary_genotypes</span>(chr2))-<span class="dv">2</span>))
+
+##reads in the data to rqtl
+<span class="kw">library</span>(qtl)
+rqtl_object &lt;-<span class="st"> </span><span class="kw">read.cross</span>(<span class="st">&quot;csv&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;temp_cross_for_qtl.csv&quot;</span>, <span class="dt">na.strings=</span><span class="st">&quot;NA&quot;</span>)</code></pre></div>
+<pre><code>##  --Read the following data:
+##   96  individuals
+##   25  markers
+##   1  phenotypes
+##  --Estimating genetic map
+##  --Cross type: bc</code></pre>
+<p>This allows genotyping data to undergo QA/QC, and then be utilized for other things like qualitative trait mapping among other things. The <strong>convert2qtl_table</strong> will also work with data that has been 0/1/2 coded with <strong>zero_one_two_coding</strong>.</p>
+</div>
+<div id="import" class="section level3">
+<h3>import</h3>
+<p>Another popular genotyping platform, Illumina’s GoldenGate, is also supported by the genotypeR package. A/B coded data can be read in with <strong>read_in_illumina_GoldenGate</strong>, and a marker table can be created with <strong>illumina_Genoype_Table</strong>. This data can then be utilized in further genotypeR analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read_in_illumina_GoldenGate</span>(<span class="dt">tab_delimited_file=</span><span class="st">&quot;path_to_goldengate_file&quot;</span>, <span class="dt">flanking_region_length=</span><span class="dv">50</span>, <span class="dt">chromosome=</span><span class="kw">rep</span>(<span class="st">&quot;chr2&quot;</span>, <span class="dt">length.out=</span><span class="kw">length</span>(<span class="dv">552960</span>)))
+
+illumina_table &lt;-<span class="st"> </span><span class="kw">illumina_Genoype_Table</span>(<span class="dt">tab_delimited_file=</span><span class="st">&quot;path_to_goldengate_file&quot;</span>, <span class="dt">flanking_region_length=</span><span class="dv">50</span>, <span class="dt">chromosome=</span><span class="kw">rep</span>(<span class="st">&quot;chr2&quot;</span>, <span class="dt">length.out=</span><span class="kw">length</span>(<span class="dv">552960</span>)))
+
+
+illumina_cross &lt;-<span class="st"> </span><span class="kw">initialize_genotypeR_data</span>(<span class="dt">seq_data =</span> test_data, <span class="dt">genotype_table =</span> illumina_table, <span class="dt">output=</span><span class="st">&quot;warnings&quot;</span>)</code></pre></div>
+</div>
+</div>
+<div id="accessor-functions" class="section level2">
+<h2>accessor functions</h2>
+<p>genotypeR is written in the S4 Object Oriented style. As a result we have provided methods for both accessing slots, and to access slots</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##accessor functions
+impossible_genotype
+genotypes
+impossible_genotype
+binary_genotypes
+counted_crossovers
+
+##replacement methods for:
+genotypes
+impossible_genotype
+binary_genotypes
+counted_crossovers</code></pre></div>
+</div>
+<div id="internal-functions" class="section level2">
+<h2>Internal functions</h2>
+<p>genotypeR also provides functions that have not been described yet. <strong>CO</strong> will count crossovers per individual, and can be used for further QA/QC, or can be used for specific research questions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doBy)
+to_count_CO &lt;-<span class="st"> </span><span class="kw">binary_genotypes</span>(chr2)
+counted_per_individuals &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">splitBy</span>(~SAMPLE_NAME+WELL, <span class="dt">data=</span>to_count_CO), CO)</code></pre></div>
+<p><strong>grep_df_subset</strong> is used to subset a dataframe based on column names. <strong>sort_sequenom</strong> sorts a dataframe based on marker columns produced by genotypeR (i.e., with <strong>make_marker_names</strong>).</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>genotypeR should be a useful package to facilitate a genotyping work flow for both natual and experimental genotyping results.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
