@@ -6,15 +6,16 @@
 library(genotypeR)
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-example_files <- system.file("SequenomMarkers_v2/two_sample/test_files", package = "genotypeR")
+##not run, but does work
+##example_files <- system.file("SequenomMarkers_v2/two_sample/test_files", package = "genotypeR")
 
-vcf1 <- paste(example_files, "Sample1.vcf", sep="/")
-vcf2 <- paste(example_files, "Sample2.vcf", sep="/")
+##vcf1 <- paste(example_files, "Sample1.vcf", sep="/")
+##vcf2 <- paste(example_files, "Sample2.vcf", sep="/")
 
 ##look in outdir to look at the results in Master_SNPs.sorted.txt.
-outdir <- paste(example_files, "test_dir", sep="/")
+##outdir <- paste(example_files, "test_dir", sep="/")
 
-SequenomMarkers(vcf1, vcf2, outdir, platform="sq")
+##SequenomMarkers(vcf1, vcf2, outdir, platform="sq")
 
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------

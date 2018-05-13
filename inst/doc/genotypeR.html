@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stephen A. Sefick" />
 
-<meta name="date" content="2017-08-23" />
+<meta name="date" content="2018-05-12" />
 
 <title>genotypeR vignette</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">genotypeR vignette</h1>
 <h4 class="author"><em>Stephen A. Sefick</em></h4>
-<h4 class="date"><em>2017-08-23</em></h4>
+<h4 class="date"><em>2018-05-12</em></h4>
 
 
 
@@ -99,16 +99,16 @@ devtools::<span class="kw">install_git</span>(<span class="st">&quot;https://git
 <div id="r-console" class="section level3">
 <h3>R console</h3>
 <p><strong>SequenomMarkers</strong> can be run from the R console.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_files &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;SequenomMarkers_v2/two_sample/test_files&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;genotypeR&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##not run, but does work
+##example_files &lt;- system.file(&quot;SequenomMarkers_v2/two_sample/test_files&quot;, package = &quot;genotypeR&quot;)
 
-vcf1 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample1.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
-vcf2 &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;Sample2.vcf&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+##vcf1 &lt;- paste(example_files, &quot;Sample1.vcf&quot;, sep=&quot;/&quot;)
+##vcf2 &lt;- paste(example_files, &quot;Sample2.vcf&quot;, sep=&quot;/&quot;)
 
 ##look in outdir to look at the results in Master_SNPs.sorted.txt.
-outdir &lt;-<span class="st"> </span><span class="kw">paste</span>(example_files, <span class="st">&quot;test_dir&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;/&quot;</span>)
+##outdir &lt;- paste(example_files, &quot;test_dir&quot;, sep=&quot;/&quot;)
 
-<span class="kw">SequenomMarkers</span>(vcf1, vcf2, outdir, <span class="dt">platform=</span><span class="st">&quot;sq&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;using two sample marker designer&quot;</code></pre>
+##SequenomMarkers(vcf1, vcf2, outdir, platform=&quot;sq&quot;)</code></pre></div>
 </div>
 <div id="r-script" class="section level3">
 <h3>R script</h3>
