@@ -1,4 +1,4 @@
-b2d36ae43be8b7ca2f5cdf17c859ad9a *DESCRIPTION
+d5d1d12d967ad2c650031ea4a9848fc0 *DESCRIPTION
 1494273d4dd82a845b6b7b2659177170 *NAMESPACE
 13f0571065a2d34424d9c2e18b8320fb *R/CO.R
 485232865af36639714ef80f1765baa1 *R/GoldenGate2iCOM_design.R
@@ -54,9 +54,9 @@ a753e34bd1ae43a55c9d9776c576e28d *inst/SequenomMarkers_v2/two_sample/sort_by_chr
 f7ce0f45d6fd0b5eb43a7d34bb48e67b *inst/SequenomMarkers_v2/two_sample/test_files/Sample1.vcf
 6b561da9b5b8800458c748bdf11e4c15 *inst/SequenomMarkers_v2/two_sample/test_files/Sample1_v_Sample2.out.diff.sites_in_files
 e12640e5463bcde37211fe2457bfcbe8 *inst/SequenomMarkers_v2/two_sample/test_files/Sample2.vcf
-8b33e613d48e4b427328c45d21e38c0a *inst/doc/genotypeR.R
-334669a0ed11ea57e05161f185b308b7 *inst/doc/genotypeR.Rmd
-5240cedd2dcc630474092b9c5acfb3c1 *inst/doc/genotypeR.html
+af2fe8f2a65db92d27e0b372398b55e0 *inst/doc/genotypeR.R
+99519a17c6b0ea8391a2a2dcc93ce0c2 *inst/doc/genotypeR.Rmd
+7aee0df17181e60c9d6788b7b3f2d046 *inst/doc/genotypeR.html
 6a3ad6858be0fce8020c05c19c5ae43d *inst/extdata/filtered_markers.txt
 4368e7ab7202e9d5899fccc7d1f429c0 *inst/extdata/sequenom_test_data.csv
 3788b0c5c75251eba63c467186442db4 *inst/get_SequenomMarkers_and_remove_git.sh
@@ -90,5 +90,5 @@ ec04a845cda0639494e971fb8a1a6f42 *tests/testthat/test-4_count_CO.R
 af805b078a71613bf12963b064e2a97c *tests/testthat/test-6_initialize_genotypeR_data.R
 1b7d0d4d0a14ba87a1cf22e70c859d05 *tests/testthat/test-7_sort_sequenom_df.R
 f6775c67051a1a8466f0a098ff8de049 *tests/testthat/test_data_generator.R
-334669a0ed11ea57e05161f185b308b7 *vignettes/genotypeR.Rmd
+99519a17c6b0ea8391a2a2dcc93ce0c2 *vignettes/genotypeR.Rmd
 483f16c54f33efd310a0bef4204f3abc *vignettes/genotypeR[exported].pdf
